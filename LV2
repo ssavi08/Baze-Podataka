@@ -1,0 +1,38 @@
+/*zad 1*/
+CREATE TABLE grupaSavi(
+id_grupe INT PRIMARY KEY,
+oznaka_grupe VARCHAR(10) UNIQUE,
+smjer VARCHAR(20),
+broj_studenata INT
+)
+
+/*zad 2*/
+CREATE TABLE studentSavi(
+br_indeksa INT PRIMARY KEY,
+ime VARCHAR(20),
+prezime VARCHAR(20),
+grupa VARCHAR(10),
+godina_upisa SMALLDATETIME,
+godina_studija TINYINT
+CONSTRAINT grupa_fk FOREIGN KEY(grupa)  REFERENCES grupaSavi(oznaka_grupe)
+)
+
+DROP TABLE studentSavi;
+
+/*zad 3*/
+ALTER TABLE studentSavi ADD prosjek DECIMAL(4,2) CHECK(prosjek > 1 and prosjek <= 5);
+ALTER TABLE studentSavi DROP COLUMN godina_studija;
+
+/*zad 4*/
+CREATE TABLE tel_imenikSavi(
+broj_telefona INT,
+ime VARCHAR(20),
+prezime VARCHAR(20),
+email VARCHAR(20),
+datum_unosa DATETIME,
+CONSTRAINT pk PRIMARY KEY (broj_telefona, datum_unosa)
+)
+
+/*zad 5*/
+CREATE INDEX prosjek_index On studentSavi(prosjek);
+CREATE UNIQUE INDEX broj_telefona_i_datum_unosa On tel_imenikSavi(broj_telefona, datum_unosa);
